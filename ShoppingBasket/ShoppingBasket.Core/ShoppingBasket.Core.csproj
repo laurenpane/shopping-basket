@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Entities\Application\Commands\" />
+      <Folder Include="Entities\Application\Handlers\" />
+      <Folder Include="Entities\Application\Queries\" />
+      <Folder Include="Exceptions\" />
+      <Folder Include="Interfaces\" />
+    </ItemGroup>
+
 </Project>
