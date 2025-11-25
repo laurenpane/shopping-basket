@@ -1,0 +1,16 @@
+{
+  "userId": "4b44094c-a7a8-4dd8-a4bb-83aede3e8661",
+  "itemId": "77a3c917-8f3e-4834-ac8c-2edbe8878d48",
+  "quantity": 1,
+  "shippingCountryCode": "string"
+}
+
+
+// WORKs:
+
+{
+  "userId": "4b44094c-a7a8-4dd8-a4bb-83aede3e8661",
+  "itemId": "77a3c917-8f3e-4834-ac8c-2edbe8878d48",
+  "quantity": 1,
+  "shippingCountryCode": "UK"
+}

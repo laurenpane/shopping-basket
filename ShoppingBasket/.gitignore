@@ -6,11 +6,6 @@ obj/
 .idea/
 *.sln.iml
 
-# Visual Studio (harmless on Mac but safe to ignore)
-.vs/
-*.user
-*.suo
-
 # NuGet + restore artifacts
 project.assets.json
 project.nuget.cache
@@ -22,5 +17,5 @@ project.packagespec.json
 # Logs
 *.log
 
-# OS junk
+# OS 
 .DS_Store

@@ -3,11 +3,10 @@ namespace ShoppingBasket.Core.Entities;
 public class BasketItem
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid BasketId { get; set; }
-    public Basket? Basket { get; set; }
     public Guid ItemId { get; set; }
-    public Item? Item { get; set; }
     public int Quantity { get; set; }
+    
+    public Guid BasketId { get; private set; }
 
     public BasketItem() {}
 
@@ -17,4 +16,7 @@ public class BasketItem
         ItemId = itemId;
         Quantity = quantity;
     }
+    
+    public void IncreaseQuantity(int amount) =>
+        Quantity += amount;
 }

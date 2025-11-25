@@ -9,8 +9,9 @@ public class Item
 
     public Item() {}
 
-    public Item(string name, decimal price, decimal discountPercentage = 0)
+    public Item(string name, decimal price, decimal discountPercentage = 0, Guid? id = null)
     {
+        Id = id ?? Guid.NewGuid();
         Name = name;
         Price = price;
         DiscountPercentage = discountPercentage;
