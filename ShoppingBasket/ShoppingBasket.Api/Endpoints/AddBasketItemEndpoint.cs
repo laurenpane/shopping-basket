@@ -6,38 +6,29 @@ using ShoppingBasket.Core.Commands;
 
 namespace ShoppingBasket.Api.Endpoints;
 
-public class AddBasketItemEndpoint 
+public class AddBasketItemEndpoint(
+    IMediator mediator,
+    ILogger<AddBasketItemEndpoint> logger)
     : Endpoint<AddBasketItemRequest, AddBasketItemResponse>
 {
-    private readonly IMediator _mediator;
-    private readonly ILogger<AddBasketItemEndpoint> _logger;
-
-    public AddBasketItemEndpoint(
-        IMediator mediator,
-        ILogger<AddBasketItemEndpoint> logger)
-    {
-        _mediator = mediator;
-        _logger = logger;
-    }
-
     public override void Configure()
     {
-        Post("/basket/items");
+        Post("/baskets/{userId}/items");
         // Version(1);
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(AddBasketItemRequest req, CancellationToken ct)
     {
-        var basketId = await _mediator.Send(
-            new AddItemToBasketCommand(
+        var basketId = await mediator.Send(
+            new AddBasketItemCommand(
                 req.UserId,
                 req.ItemId,
                 req.Quantity,
                 req.ShippingCountryCode),
             ct);
 
-        _logger.LogInformation("Basket updated successfully {BasketId}", basketId);
+        logger.LogInformation("Basket updated successfully {BasketId}", basketId);
 
         await Send.OkAsync(new AddBasketItemResponse(basketId), ct);
     }

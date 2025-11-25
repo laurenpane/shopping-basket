@@ -10,6 +10,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Item> Items => Set<Item>();
     public DbSet<Stock> Stock => Set<Stock>();
     public DbSet<ShippingCountry> ShippingCountries => Set<ShippingCountry>();
+    public DbSet<DiscountCode> DiscountCodes => Set<DiscountCode>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
