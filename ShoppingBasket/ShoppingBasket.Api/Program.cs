@@ -25,8 +25,8 @@ builder.Services.SwaggerDocument();
 // to improve:
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssemblyContaining<AddItemToBasketCommand>();
-    cfg.RegisterServicesFromAssemblyContaining<AddItemToBasketHandler>();
+    cfg.RegisterServicesFromAssemblyContaining<AddBasketItemCommand>();
+    cfg.RegisterServicesFromAssemblyContaining<AddBasketItemHandler>();
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -48,17 +48,23 @@ SeedData(app);
 
 app.Run();
 
+
 static void SeedData(WebApplication app)
 {
+    // Database seeding is done here in Program.cs as it was the simplest way within time constraints using InMemory.
+    // For more advanced local development, had I used a database (e.g. Postgres), I would have added a script to create and seed a local instance via Docker
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     
     db.Database.EnsureCreated();
     if (!db.Items.Any())
     {
-        var dress = new Item("Blue Dress", 49.99m, id: Guid.Parse("77a3c917-8f3e-4834-ac8c-2edbe8878d48"));
-        var jeans = new Item("Jeans", 59.99m);
-        var shoes = new Item("Shoes", 89.99m);
+        // hard coded Guid here for manual testing purposes under time constraint (a valid item id is required for AddBasketItem).
+        // Ideally there would be a filtered GET all endpoint called by the API user for the Items, which would then be passed into this request
+        // when a BasketItem was added to a Basket.
+        var dress = new Item("Dress", 49.99m, id: Guid.Parse("77a3c917-8f3e-4834-ac8c-2edbe8878d48"));
+        var jeans = new Item("Low-Waisted Jeans", 59.99m);
+        var shoes = new Item("Leather Jacket", 89.99m);
 
         db.Items.AddRange(dress, jeans, shoes);
         db.SaveChanges();
@@ -73,13 +79,15 @@ static void SeedData(WebApplication app)
     }
 
     if (!db.ShippingCountries.Any())
-    {
         db.ShippingCountries.AddRange(
-            new ShippingCountry("UK", 4.99m),
-            new ShippingCountry("US", 9.99m),
-            new ShippingCountry("DE", 6.49m)
-        );
+        new ShippingCountry("UK", 1.99m),
+        new ShippingCountry("US", 5.99m),
+        new ShippingCountry("AU", 7.49m)
+    );
+    
+    if (!db.DiscountCodes.Any())
+        db.DiscountCodes.Add(
+        new DiscountCode("BLACKFRIDAY25", 0.25m));
 
-        db.SaveChanges();
-    }
+    db.SaveChanges();
 }

@@ -4,36 +4,33 @@ using ShoppingBasket.Core.Exceptions;
 
 namespace ShoppingBasket.Api.Middleware;
 
-public class ExceptionMiddleware
+public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionMiddleware> _logger;
-
-    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (InvalidShippingCountryException ex)
         {
-            _logger.LogWarning(ex, "Invalid shipping country: {Code}", ex.Message);
             await WriteError(context, HttpStatusCode.BadRequest, ex.Message);
         }
         catch (InsufficientStockException ex)
         {
-            _logger.LogWarning(ex, "Insufficient stock: {ItemId}", ex.Message);
             await WriteError(context, HttpStatusCode.Conflict, ex.Message);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            await WriteError(context, HttpStatusCode.NotFound, ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            await WriteError(context, HttpStatusCode.BadRequest, ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception");
+            logger.LogError(ex, "Unhandled exception");
             await WriteError(context, HttpStatusCode.InternalServerError, "Something went wrong.");
         }
     }
