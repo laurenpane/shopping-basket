@@ -28,8 +28,6 @@ public class AddBasketItemEndpoint(
                 req.ShippingCountryCode),
             ct);
 
-        logger.LogInformation("Basket updated successfully {BasketId}", basketId);
-
         await Send.OkAsync(new AddBasketItemResponse(basketId), ct);
     }
 }
