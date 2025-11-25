@@ -8,17 +8,20 @@ public class BasketItem
     
     public Guid BasketId { get; private set; }
     
-    public decimal Price { get; set; }
-    // Although it seems like duplication, I added this here as it's important to store Price on BasketItem as well, as the Price on Item may change over time
+    public decimal RegularPrice { get; set; }
+    public decimal? SalePrice { get; set; }
+    // Although it seems like duplication of Item, I added these here as it's important to store prices on BasketItem as well
+    // as the prices on an item may change over time but the BasketItem at point of checkout should be recorded
 
     public BasketItem() {}
 
-    public BasketItem(Guid basketId, Guid itemId, int quantity, decimal price)
+    public BasketItem(Guid basketId, Guid itemId, int quantity, decimal regularPrice, decimal? salePrice)
     {
         BasketId = basketId;
         ItemId = itemId;
         Quantity = quantity;
-        Price = price;
+        RegularPrice = regularPrice;
+        SalePrice = salePrice;
     }
     
     public void IncreaseQuantity(int amount) =>

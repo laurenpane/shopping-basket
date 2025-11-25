@@ -63,7 +63,7 @@ static void SeedData(WebApplication app)
         // Ideally there would be a filtered GET all endpoint called by the API user for the Items, which would then be passed into this request
         // when a BasketItem was added to a Basket.
         var dress = new Item("Dress", 49.99m, id: Guid.Parse("77a3c917-8f3e-4834-ac8c-2edbe8878d48"));
-        var jeans = new Item("Low-Waisted Jeans", 59.99m);
+        var jeans = new Item("Low-Waisted Jeans", 59.99m, salePrice: 40, id: Guid.Parse("0d6fbf40-ed5e-4fdb-a6e3-15e5e1c94fa1"));
         var shoes = new Item("Leather Jacket", 89.99m);
 
         db.Items.AddRange(dress, jeans, shoes);

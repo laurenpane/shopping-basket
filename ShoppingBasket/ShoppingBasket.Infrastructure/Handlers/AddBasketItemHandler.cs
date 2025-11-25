@@ -36,7 +36,7 @@ public class AddBasketItemHandler(AppDbContext db, IShippingService shippingServ
             db.Baskets.Add(basket);
         }
         
-        basket.AddBasketItem(request.ItemId, request.Quantity, item.Price);
+        basket.AddBasketItem(request.ItemId, request.Quantity, item.RegularPrice, item.SalePrice);
         
         await db.SaveChangesAsync(ct);
         return basket.Id;

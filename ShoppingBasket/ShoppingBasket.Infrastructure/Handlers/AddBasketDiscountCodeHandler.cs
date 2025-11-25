@@ -26,7 +26,15 @@ public class AddBasketDiscountCodeHandler(AppDbContext db)
         if(discountCode is null) 
             throw new KeyNotFoundException($"Discount code {request.DiscountCode} does not exist");
         
-        var discountAmount = basket.Items.Sum(i => i.Quantity * i.Price) * discountCode.DiscountPercentage;
+        //todo use in get logic
+        // var saleItemsTotal = basket.GetSaleItems()
+        //     .Sum(i => i.Quantity * i.SalePrice.Value);
+
+        var nonSaleItemsTotal = basket.GetNonSaleItems()
+            .Sum(i => i.Quantity * i.RegularPrice);
+        
+        var discountAmount = nonSaleItemsTotal * discountCode.DiscountPercentage;
+        // var finalTotal = (nonSaleItemsTotal - discountAmount) + saleItemsTotal;
 
         basket.AddDiscount(request.DiscountCode, discountAmount);
 
