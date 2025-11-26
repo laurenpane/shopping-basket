@@ -12,7 +12,16 @@ using ShoppingBasket.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFastEndpoints();
-builder.Services.SwaggerDocument();
+builder.Services.SwaggerDocument(o =>
+{
+    o.MaxEndpointVersion = 1;
+    o.MinEndpointVersion = 1;
+    o.DocumentSettings = s =>
+    {
+        s.Title = "Shopping Basket API";
+        s.Version = "v1";
+    };
+});
 
 builder.Services.AddMediatR(cfg =>
 {
@@ -33,9 +42,13 @@ app.UseFastEndpoints(config =>
 {
     config.Versioning.Prefix = "v";
     config.Versioning.PrependToRoute = true;
+    config.Endpoints.RoutePrefix = null;
 });
 
-app.UseSwaggerGen();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwaggerGen();
+}
 SeedData(app);
 
 app.Run();

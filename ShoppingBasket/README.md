@@ -10,7 +10,6 @@ A .NET 8 shopping basket API built with clean architecture, CQRS, and DDD patter
 ### Running the Application
 
 ```bash
-dotnet build
 cd ShoppingBasket.Api
 dotnet run
 ```
@@ -38,12 +37,12 @@ dotnet test
 
 ### Implemented Endpoints
 
-| Endpoint                             | Method | Description                                                                                           |
-|--------------------------------------|--------|-------------------------------------------------------------------------------------------------------|
-| `/baskets/{userId}/items`         | POST | Add item to basket with stock validation                                                              |
-| `/baskets/{userId}/items/{itemId}` | DELETE | Remove item from basket                                                                               |
-| `/baskets/{userId}/discount-code` | POST | Apply discount code (only to full-priced items)                                                       |
-| `/baskets/{userId}/summary`       | GET | Paginated basket summary with calculated totals (includes VAT logic which was a requested feature) |
+| Endpoint                                   | Method | Description                                                                                           |
+|--------------------------------------------|--------|-------------------------------------------------------------------------------------------------------|
+| `/v1/baskets/{userId}/items`            | POST | Add item to basket with stock validation                                                              |
+| `/v1/baskets/{userId}/items/{itemId}`   | DELETE | Remove item from basket                                                                               |
+| `/v1/baskets/{userId}/discount-code`    | POST | Apply discount code (only to full-priced items)                                                       |
+| `/v1/baskets/{userId}/summary`          | GET | Paginated basket summary with calculated totals (includes VAT logic which was a requested feature) |
 
 ### Why These Endpoints?
 
@@ -137,7 +136,7 @@ Current state: Partial implementation - validators exist (`AddItemRequestValidat
 
 ### API Versioning
 
-Current state: Endpoints use `Version(1)` but no deprecation strategy
+All endpoints are versioned with `/v1/` prefix using FastEndpoints' built-in versioning. Future versions can be added by creating new endpoint classes with `Version(2)`, allowing multiple API versions to coexist.
 
 ---
 
