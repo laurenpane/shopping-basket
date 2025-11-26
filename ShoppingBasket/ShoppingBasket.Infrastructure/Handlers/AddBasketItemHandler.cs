@@ -35,10 +35,15 @@ public class AddBasketItemHandler(AppDbContext db, IShippingService shippingServ
             basket = new Basket(request.UserId, request.ShippingCountryCode);
             db.Baskets.Add(basket);
         }
-        
-        basket.AddBasketItem(request.ItemId, request.Quantity, item.RegularPrice, item.SalePrice);
-        
+    
+        var newBasketItem = basket.AddBasketItem(request.ItemId, request.Quantity, item.RegularPrice, item.SalePrice);
+
+        if (newBasketItem is not null)
+        {
+            db.BasketItems.Add(newBasketItem);
+        }
+
         await db.SaveChangesAsync(ct);
         return basket.Id;
-    }
+    } 
 }

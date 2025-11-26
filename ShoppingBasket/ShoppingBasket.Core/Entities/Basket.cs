@@ -18,15 +18,18 @@ public class Basket
         DiscountAmountApplied = 0m;
     }
     
-    public void AddBasketItem(Guid itemId, int quantity, decimal regularPrice, decimal? salePrice)
+    public BasketItem? AddBasketItem(Guid itemId, int quantity, decimal regularPrice, decimal? salePrice)
     {
         var existing = Items.FirstOrDefault(i => i.ItemId == itemId);
 
         if (existing is null)
-            Items.Add(new BasketItem(Id, itemId, quantity, regularPrice, salePrice));
-
-        else
-            existing.IncreaseQuantity(quantity);
+        {
+            var newItem = new BasketItem(Id, itemId, quantity, regularPrice, salePrice);
+            Items.Add(newItem);
+            return newItem;
+        }
+        existing.IncreaseQuantity(quantity);
+        return null;
     }
 
     public void AddDiscount(string code, decimal amount)
@@ -44,5 +47,11 @@ public class Basket
     
     public IEnumerable<BasketItem> GetNonSaleItems()
         => Items.Where(i => !i.SalePrice.HasValue);
+
+    public decimal GetSubtotalNonSale() =>
+        GetNonSaleItems().Sum(i => i.Quantity * i.RegularPrice);
+    
+    public decimal GetSubtotalSale() =>
+        GetNonSaleItems().Sum(i => i.Quantity * i.SalePrice!.Value);
 
 }
