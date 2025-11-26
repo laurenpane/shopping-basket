@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Entities\Application\Commands\" />
+      <Folder Include="Entities\Application\Handlers\" />
+      <Folder Include="Entities\Application\Queries\" />
+      <Folder Include="Interfaces\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="14.0.0-beta-1" />
+    </ItemGroup>
+
+</Project>
