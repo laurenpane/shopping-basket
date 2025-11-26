@@ -13,7 +13,7 @@ public class GetBasketSummaryEndpoint(
     public override void Configure()
     {
         Get("/baskets/{userId}/summary");
-        // Version(1);
+        Version(1);
         AllowAnonymous();
     }
 

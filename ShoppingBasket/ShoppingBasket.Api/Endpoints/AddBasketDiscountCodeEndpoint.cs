@@ -13,7 +13,7 @@ public class AddBasketDiscountCodeEndpoint(
     public override void Configure()
     {
         Post("/baskets/{userId}/discount-code");
-        // Version(1);
+        Version(1);
         AllowAnonymous();
     }
 

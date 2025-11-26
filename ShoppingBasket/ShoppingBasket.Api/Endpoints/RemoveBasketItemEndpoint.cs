@@ -13,7 +13,7 @@ public class RemoveBasketItemEndpoint(
     public override void Configure()
     {
         Delete("/baskets/{userId}/items/{itemId}");
-        // Version(1);
+        Version(1);
         AllowAnonymous();
     }
 

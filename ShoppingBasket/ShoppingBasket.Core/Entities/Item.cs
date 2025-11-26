@@ -3,7 +3,7 @@ namespace ShoppingBasket.Core.Entities;
 public class Item
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public decimal RegularPrice { get; set; }
     public decimal? SalePrice { get; set; }
     public decimal? DiscountPercentage { get; set; }

@@ -12,7 +12,7 @@ public class AddBasketItemEndpoint(IMediator mediator)
     public override void Configure()
     {
         Post("/baskets/{userId}/items");
-        // Version(1);
+        Version(1);
         AllowAnonymous();
     }
 

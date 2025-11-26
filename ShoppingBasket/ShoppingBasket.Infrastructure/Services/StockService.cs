@@ -21,6 +21,6 @@ public class StockService(AppDbContext db) : IStockService
         return stock;
     }
     
-    private Task<bool> HasSufficientStockAsync(Guid itemId, int quantity, CancellationToken ct)
-        => db.Stock.AnyAsync(stock => stock.ItemId == itemId && stock.QuantityAvailable >= quantity, ct);
+    // Note: This is a simplified implementation that immediately decrements stock, and doesn't take into account other users' baskets.
+    // In production, this may place a temporary hold on items (like retailers that hold items in your basket for 60 mins) rather than immediately reducing available quantity from stock.
 }
