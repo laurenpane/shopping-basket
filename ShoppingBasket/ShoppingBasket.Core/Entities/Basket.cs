@@ -4,7 +4,7 @@ public class Basket
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid UserId { get; set; }
-    public string ShippingCountryCode { get; set; }
+    public string ShippingCountryCode { get; set; } = string.Empty;
     public List<BasketItem> Items { get; set; } = new();
     public string? DiscountCode { get; set; }
     public decimal DiscountAmountApplied { get; set; }
@@ -52,6 +52,6 @@ public class Basket
         GetNonSaleItems().Sum(i => i.Quantity * i.RegularPrice);
     
     public decimal GetSubtotalSale() =>
-        GetNonSaleItems().Sum(i => i.Quantity * i.SalePrice!.Value);
+        GetSaleItems().Sum(i => i.Quantity * i.SalePrice!.Value);
 
 }
