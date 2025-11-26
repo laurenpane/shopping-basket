@@ -6,9 +6,7 @@ using ShoppingBasket.Core.Commands;
 
 namespace ShoppingBasket.Api.Endpoints;
 
-public class AddBasketItemEndpoint(
-    IMediator mediator,
-    ILogger<AddBasketItemEndpoint> logger)
+public class AddBasketItemEndpoint(IMediator mediator)
     : Endpoint<AddBasketItemRequest, AddBasketItemResponse>
 {
     public override void Configure()

@@ -13,16 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFastEndpoints();
 builder.Services.SwaggerDocument();
-// builder.Services.SwaggerDocument(o =>
-//     {
-//         o.DocumentSettings = s =>
-//         {
-//             s.Version = "v1";
-//             s.Title = "Shopping Basket API";
-//         };
-//     });
 
-// to improve:
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining<AddBasketItemCommand>();
@@ -37,12 +28,13 @@ builder.Services.AddScoped<IStockService, StockService>();
 
 var app = builder.Build();
 
-// app.UseFastEndpoints(c =>
-// {
-//     c.Versioning.Prefix = "v";
-// });
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseFastEndpoints();
+app.UseFastEndpoints(config =>
+{
+    config.Versioning.Prefix = "v";
+    config.Versioning.PrependToRoute = true;
+});
+
 app.UseSwaggerGen();
 SeedData(app);
 
